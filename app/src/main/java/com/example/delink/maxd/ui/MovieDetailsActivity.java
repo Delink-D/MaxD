@@ -35,9 +35,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
     public static final String TAG = MovieDetailsActivity.class.getSimpleName();
 
-    @Bind(R.id.over_view)
-    TextView overView;
-    @Bind(R.id.backdrop) ImageView mImage;
+    @Bind(R.id.over_view) TextView mOverView;
+    @Bind(R.id.backdrop) ImageView mBackdrop;
+    @Bind(R.id.details_img) ImageView mImage;
+    @Bind(R.id.details_rate) TextView mRating;
+    @Bind(R.id.details_date) TextView mReleaseDate;
 
     private ArrayList<MoviesTopRated> mMovies = new ArrayList<>();
     int position;
@@ -58,22 +60,18 @@ public class MovieDetailsActivity extends AppCompatActivity {
         mMovies = Parcels.unwrap(getIntent().getParcelableExtra("movies"));
         position = getIntent().getIntExtra("position", 0);
 
-        CollapsingToolbarLayout x = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
-        x.setBackgroundDrawable(getResources().getDrawable(R.drawable.intheaters));
+        CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout.setBackgroundDrawable(getResources().getDrawable(R.drawable.intheaters));
 
-        x.setTitle(mMovies.get(position).getTitle());
+        collapsingToolbarLayout.setTitle(mMovies.get(position).getTitle());
 
-        String poster = mMovies.get(position).getPoster_path();
+        String poster = mMovies.get(position).getBackdrop_path();
 
-//        mImage.setBackground(new Glide(with(this).load(poster)));
-//        mImage.setBackground(Glide.with(this).load(poster).);
-        //Glide.with(this).load(mMovies.get(position).getBackdrop_path()).into((ImageView) findViewById(R.id.backdrop));
-        Glide.with(this).load(poster).into(mImage);
-
-
-        overView.setText(mMovies.get(position).getOverview());
-//        Picasso.with(mContext).load(mMovies.get(position).getBackdrop_path()).into(x.setBackground(););
-
+        Glide.with(this).load(poster).into(mBackdrop);
+        Glide.with(this).load(mMovies.get(position).getPoster_path()).into(mImage);
+        mOverView.setText(mMovies.get(position).getOverview());
+        mRating.setText("Movie Rating: " + mMovies.get(position).getVote_average());
+        mReleaseDate.setText("Release Date: " + mMovies.get(position).getRelease_date());
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
