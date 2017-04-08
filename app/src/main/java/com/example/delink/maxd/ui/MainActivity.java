@@ -45,6 +45,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Bind(R.id.love_movies_tag_line) TextView tagLine;
     @Bind(R.id.love_movies) TextView loveMovies;
 
+//    @Bind(R.id.displayName) TextView mDisplayName;
+
 //    private  adapter;
     private MoviesListAdapter mAdapter;
 
@@ -81,12 +83,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 //display welcome message
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null){
-                    TextView mDisplayName = (TextView) findViewById(R.id.displayName);
-                    mDisplayName.setText("Welcome " + user.getDisplayName());
-                }else{
 
-                }
+                TextView mDisplayName = (TextView) findViewById(R.id.displayName);
+                if (user != null){
+                    mDisplayName.setText("Welcome " + user.getDisplayName());
+                }else mDisplayName.setText("Welcome User!");
             }
         };
 
