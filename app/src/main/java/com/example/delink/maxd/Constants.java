@@ -16,4 +16,6 @@ public class Constants {
     public static final String BASE_TV_URL_POPULAR = "https://api.themoviedb.org/3/tv/popular"; // url to send request to get to popular tv series
 
     public static  final String KEY = "api_key";
+
+    public static final String FIREBASE_CHILD_FAVOURITE = "favourite";
 }

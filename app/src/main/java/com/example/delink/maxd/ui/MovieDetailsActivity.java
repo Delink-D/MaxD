@@ -16,8 +16,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
+import com.example.delink.maxd.Constants;
 import com.example.delink.maxd.R;
 import com.example.delink.maxd.modal.MoviesTopRated;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -31,7 +34,7 @@ import butterknife.ButterKnife;
 
 import static com.squareup.picasso.Picasso.*;
 
-public class MovieDetailsActivity extends AppCompatActivity {
+public class MovieDetailsActivity extends AppCompatActivity implements View.OnClickListener{
 
     public static final String TAG = MovieDetailsActivity.class.getSimpleName();
 
@@ -40,6 +43,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Bind(R.id.details_img) ImageView mImage;
     @Bind(R.id.details_rate) TextView mRating;
     @Bind(R.id.details_date) TextView mReleaseDate;
+    @Bind(R.id.fab) FloatingActionButton mFab;
 
     private ArrayList<MoviesTopRated> mMovies = new ArrayList<>();
     int position;
@@ -73,13 +77,21 @@ public class MovieDetailsActivity extends AppCompatActivity {
         mRating.setText("Movie Rating: " + mMovies.get(position).getVote_average());
         mReleaseDate.setText("Release Date: " + mMovies.get(position).getRelease_date());
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        mFab.setOnClickListener(this);
+    }
+
+    public void saveMovieToFavourite() {
+        DatabaseReference databaseReference = FirebaseDatabase
+                .getInstance()
+                .getReference(Constants.FIREBASE_CHILD_FAVOURITE);
+        databaseReference.push().setValue(mMovies.get(position));
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == mFab){
+            saveMovieToFavourite();
+            Snackbar.make(v, "Movie Added to Favourite", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+        }
     }
 }
