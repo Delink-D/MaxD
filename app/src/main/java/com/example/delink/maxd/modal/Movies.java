@@ -2,7 +2,7 @@ package com.example.delink.maxd.modal;
 import org.parceler.Parcel;
 
 @Parcel
-public class MoviesTopRated {
+public class Movies {
     private String title;
     private String overview;
     private String release_date;
@@ -12,11 +12,11 @@ public class MoviesTopRated {
     private String backdrop_path;
     private double popularity;
 
-    public MoviesTopRated() {}
+    public Movies() {}
 
-    public MoviesTopRated(String title,String overview,String release_date,
-                          int vote_count,double vote_average,String poster_path,
-                          String backdrop_path, double popularity) {
+    public Movies(String title, String overview, String release_date,
+                  int vote_count, double vote_average, String poster_path,
+                  String backdrop_path, double popularity) {
         this.title = title;
         this.overview = overview;
         this.release_date = release_date;
@@ -44,10 +44,10 @@ public class MoviesTopRated {
         return vote_average;
     }
     public String getPoster_path(){
-        return "https://image.tmdb.org/t/p/w500" + poster_path;
+        return poster_path;
     }
     public String getBackdrop_path(){
-        return "https://image.tmdb.org/t/p/w1000" + backdrop_path;
+        return backdrop_path;
     }
     public double getPopularity(){
         return popularity;

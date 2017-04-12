@@ -2,7 +2,6 @@ package com.example.delink.maxd.ui;
 
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -15,24 +14,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.GlideBitmapDrawable;
 import com.example.delink.maxd.Constants;
 import com.example.delink.maxd.R;
-import com.example.delink.maxd.modal.MoviesTopRated;
+import com.example.delink.maxd.modal.Movies;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
-import javax.microedition.khronos.opengles.GL;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
-
-import static com.squareup.picasso.Picasso.*;
 
 public class MovieDetailsActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -45,7 +38,7 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
     @Bind(R.id.details_date) TextView mReleaseDate;
     @Bind(R.id.fab) FloatingActionButton mFab;
 
-    private ArrayList<MoviesTopRated> mMovies = new ArrayList<>();
+    private ArrayList<Movies> mMovies = new ArrayList<>();
     int position;
 
     private Context mContext;
@@ -69,10 +62,11 @@ public class MovieDetailsActivity extends AppCompatActivity implements View.OnCl
 
         collapsingToolbarLayout.setTitle(mMovies.get(position).getTitle());
 
-        String poster = mMovies.get(position).getBackdrop_path();
+        String backdropURL = "https://image.tmdb.org/t/p/w1000" + mMovies.get(position).getBackdrop_path();
+        String imageURL = "https://image.tmdb.org/t/p/w500" + mMovies.get(position).getPoster_path();
 
-        Glide.with(this).load(poster).into(mBackdrop);
-        Glide.with(this).load(mMovies.get(position).getPoster_path()).into(mImage);
+        Glide.with(this).load(backdropURL).into(mBackdrop);
+        Glide.with(this).load(imageURL).into(mImage);
         mOverView.setText(mMovies.get(position).getOverview());
         mRating.setText("Movie Rating: " + mMovies.get(position).getVote_average());
         mReleaseDate.setText("Release Date: " + mMovies.get(position).getRelease_date());

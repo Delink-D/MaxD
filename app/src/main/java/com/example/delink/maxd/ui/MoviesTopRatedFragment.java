@@ -2,7 +2,6 @@ package com.example.delink.maxd.ui;
 
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.example.delink.maxd.R;
 import com.example.delink.maxd.adapters.MoviesListAdapter;
-import com.example.delink.maxd.modal.MoviesTopRated;
+import com.example.delink.maxd.modal.Movies;
 import com.example.delink.maxd.service.MovieDb;
 
 import java.io.IOException;
@@ -37,7 +36,7 @@ public class MoviesTopRatedFragment extends Fragment {
     private MoviesListAdapter mAdapter;
 
     //    Array list from the modal class
-    public ArrayList<MoviesTopRated> mTopRated = new ArrayList<>();
+    public ArrayList<Movies> mTopRated = new ArrayList<>();
 
     public MoviesTopRatedFragment() {
         // Required empty public constructor

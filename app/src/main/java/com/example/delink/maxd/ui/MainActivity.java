@@ -1,7 +1,9 @@
 package com.example.delink.maxd.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -19,18 +21,19 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.delink.maxd.Constants;
 import com.example.delink.maxd.LoginActivity;
 import com.example.delink.maxd.R;
 import com.example.delink.maxd.adapters.MoviesListAdapter;
-import com.example.delink.maxd.modal.MoviesTopRated;
+import com.example.delink.maxd.modal.Movies;
 import com.example.delink.maxd.service.MovieDb;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -51,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private MoviesListAdapter mAdapter;
 
 //    Array list from the modal class
-    public ArrayList<MoviesTopRated> mTopRated = new ArrayList<>();
+    public ArrayList<Movies> mTopRated = new ArrayList<>();
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -65,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         initCollapsingToolbar();
 
@@ -82,20 +86,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 //display welcome message
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-
-                TextView mDisplayName = (TextView) findViewById(R.id.displayName);
-                if (user != null){
-                    mDisplayName.setText("Welcome " + user.getDisplayName());
-                }else mDisplayName.setText("Welcome User!");
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//
+//                TextView mDisplayNameTxt = (TextView) findViewById(R.id.displayName);
+//                if (mDisplayName != null){
+//                mDisplayNameTxt.setText("Welcome " + mDisplayName);
+//                }else mDisplayName.setText("Welcome User!");
             }
         };
 
         // Call the method to populate the movielist
-        getUpcoming();
+//        getUpcoming();
 
-        // Call the method that gets all latest movies
-//        getLatest();
     }
 
     // Get toprated movies
@@ -128,10 +130,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
-    // Get the latest movies
+    // Get the playing movie
     private void getLatest(){
         final MovieDb movieDbService = new MovieDb();
-        movieDbService.findLatest(new Callback() {
+        movieDbService.findPlaying(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 e.printStackTrace();
@@ -209,6 +211,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
     }
 
+    // Get the searched movies
+    private void getSearched(String search){
+        final MovieDb movieDbService = new MovieDb();
+        movieDbService.search(search, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                mTopRated = movieDbService.processResults(response);
+
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loveMovies.setText("SEACHED MOVIE");
+                        tagLine.setText("List of seach");
+                        mAdapter = new MoviesListAdapter(getApplicationContext(), mTopRated);
+                        mRecyclerView.setAdapter(mAdapter);
+                        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(MainActivity.this, 2);
+                        mRecyclerView.setLayoutManager(layoutManager);
+                        mRecyclerView.setHasFixedSize(true);
+                    }
+                });
+            }
+        });
+    }
+
     private void initCollapsingToolbar() {
         final CollapsingToolbarLayout collapsingToolbar =
                 (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
@@ -251,13 +282,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
+//        inflater.inflate(R.menu.main, menu);
         inflater.inflate(R.menu.menu_search, menu);
 
         ButterKnife.bind(this);
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                getSearched(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         return true;
     }
@@ -283,9 +327,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_movies_latest) {
-            loveMovies.setText("LATEST MOVIES");
-            tagLine.setText("Great Latest Movies");
+        if (id == R.id.nav_movies_playing) {
+            loveMovies.setText("IN THEATERS");
+            tagLine.setText("Showing in Theaters");
             getLatest();
         } else if (id == R.id.nav_movies_toplated) {
             loveMovies.setText("TOP RATED MOVIES");
@@ -295,12 +339,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             loveMovies.setText("TOP POPULAR MOVIES");
             tagLine.setText("All Time Top Popular Movies");
             getPopular();
-//            rootView = inflater.inflate(R.layout.fragment_movies_top_rated, container, false);
         } else if (id == R.id.nav_movies_upcoming) {
             loveMovies.setText("UPCOMING MOVIES");
             tagLine.setText("Looking Foward For this Great Movies");
             getUpcoming();
-        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_fav_movies) {
+            Intent intent = new Intent(MainActivity.this, FavouriteMoviesListActivity.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_send) {
 

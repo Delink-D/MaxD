@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Movies"
         android:textAlignment="center"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorSecondaryText"
         android:textStyle="bold"
         android:textSize="30sp"
         android:layout_below="@+id/textView2"

@@ -1,7 +1,7 @@
 package com.example.delink.maxd.service;
 
 import com.example.delink.maxd.Constants;
-import com.example.delink.maxd.modal.MoviesTopRated;
+import com.example.delink.maxd.modal.Movies;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,10 +35,10 @@ public class MovieDb {
     }
 
     // Method to generate a url to get alll the latest movies
-    public static void findLatest(Callback callback) {
+    public static void findPlaying(Callback callback) {
         OkHttpClient client = new OkHttpClient();
 
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.BASE_URL_LATEST).newBuilder();
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.BASE_URL_PLAYING).newBuilder();
         urlBuilder.addQueryParameter(Constants.KEY, Constants.MOVIE_DB_API_KEY);
         String url = urlBuilder.build().toString();
 
@@ -82,8 +82,25 @@ public class MovieDb {
         call.enqueue(callback);
     }
 
-    public ArrayList<MoviesTopRated> processResults(Response response) {
-        ArrayList<MoviesTopRated> movies = new ArrayList<>();
+    // Method to generate a url to get alll the popular movies
+    public static void search(String search, Callback callback) {
+        OkHttpClient client = new OkHttpClient();
+
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(Constants.BASE_URL_SEARCH).newBuilder();
+        urlBuilder.addQueryParameter(Constants.KEY, Constants.MOVIE_DB_API_KEY);
+        urlBuilder.addQueryParameter(Constants.QUERY, search);
+        String url = urlBuilder.build().toString();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+    }
+
+    public ArrayList<Movies> processResults(Response response) {
+        ArrayList<Movies> movies = new ArrayList<>();
 
         try{
             String jsonData = response.body().string();
@@ -102,7 +119,7 @@ public class MovieDb {
                     String backdrop_path = moviesJSON.getString("backdrop_path");
                     double popularity = moviesJSON.getDouble("popularity");
 
-                    MoviesTopRated movie = new MoviesTopRated(title, overview, release_date, vote_count,
+                    Movies movie = new Movies(title, overview, release_date, vote_count,
                             vote_average, poster_path, backdrop_path, popularity);
                     movies.add(movie);
                 }

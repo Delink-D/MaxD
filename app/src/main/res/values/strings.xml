@@ -27,4 +27,19 @@
     <string name="large_text">
         A koala named Buster recruits his best friend to help him drum up business for his theater by hosting a singing competition.
     </string>
+    <string name="title_activity_favourite">Favourite Movies</string>
+    <string name="latest">Latest</string>
+    <string name="movies">Movies</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="upcoming">UpComing</string>
+    <string name="tv">Tv</string>
+    <string name="favourite">Favourite</string>
+    <string name="tv_s">Tv\'s</string>
+    <string name="logout">LogOut</string>
+    <string name="profile">Profile</string>
+    <string name="account">Account</string>
+    <string name="send">Send</string>
+    <string name="share">Share</string>
+    <string name="communicate">Communicate</string>
 </resources>

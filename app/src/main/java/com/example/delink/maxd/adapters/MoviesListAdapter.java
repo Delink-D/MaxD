@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.delink.maxd.R;
-import com.example.delink.maxd.modal.MoviesTopRated;
+import com.example.delink.maxd.modal.Movies;
 //import com.example.delink.maxd.ui.MovieDatails;
 import com.example.delink.maxd.ui.MovieDetailsActivity;
 import com.squareup.picasso.Picasso;
@@ -25,10 +25,10 @@ import butterknife.ButterKnife;
 
 public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MoviesViewHolder> {
 
-    private ArrayList<MoviesTopRated> mMovies= new ArrayList<>();
+    private ArrayList<Movies> mMovies= new ArrayList<>();
     private Context mContext;
 
-    public MoviesListAdapter(Context context,ArrayList<MoviesTopRated>movies){
+    public MoviesListAdapter(Context context,ArrayList<Movies>movies){
         mContext=context;
         mMovies = movies;
     }
@@ -65,13 +65,14 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
             itemView.setOnClickListener(this);
         }
 
-        public void bindMovies(MoviesTopRated moviesTopRated) {
-            Picasso.with(mContext).load(moviesTopRated.getPoster_path()).into(mImage);
+        public void bindMovies(Movies movies) {
+            String imageURL = "https://image.tmdb.org/t/p/w500" + movies.getPoster_path();
+            Picasso.with(mContext).load(imageURL).into(mImage);
 
-            String title = moviesTopRated.getTitle();
+            String title = movies.getTitle();
 
             mTitle.setText(limitLength(title, 16));
-            mRate.setText("Rating: " + moviesTopRated.getVote_average() + "/10");
+            mRate.setText("Rating: " + movies.getVote_average() + "/10");
 
         }
 
