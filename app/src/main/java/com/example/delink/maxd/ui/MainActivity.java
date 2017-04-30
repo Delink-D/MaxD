@@ -2,9 +2,12 @@ package com.example.delink.maxd.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.MenuItemCompat;
@@ -96,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         };
 
         // Call the method to populate the movielist
-//        getUpcoming();
+        getLatest();
 
     }
 
@@ -278,6 +281,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -289,6 +293,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         MenuItem menuItem = menu.findItem(R.id.action_search);
         SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+        Drawable bg_search = getResources().getDrawable(R.drawable.bg_search);
+        searchView.setBackground(bg_search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override

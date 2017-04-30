@@ -6,13 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.delink.maxd.Constants;
 import com.example.delink.maxd.R;
 import com.example.delink.maxd.modal.Movies;
-import com.example.delink.maxd.ui.MainActivity;
-import com.example.delink.maxd.ui.MovieDetailsActivity;
+import com.example.delink.maxd.ui.MoviesDetailsActivity;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,8 +24,8 @@ import java.util.ArrayList;
 
 public class FirebaseMoviesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    View mView;
-    Context mContext;
+    private View mView;
+    private Context mContext;
 
     public FirebaseMoviesViewHolder(View itemView) {
         super(itemView);
@@ -61,21 +59,21 @@ public class FirebaseMoviesViewHolder extends RecyclerView.ViewHolder implements
 
     @Override
     public void onClick(View v) {
-        final ArrayList<Movies> restaurants = new ArrayList<>();
+        final ArrayList<Movies> movies = new ArrayList<>();
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference(Constants.FIREBASE_CHILD_FAVOURITE);
         ref.addListenerForSingleValueEvent(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    restaurants.add(snapshot.getValue(Movies.class));
+                    movies.add(snapshot.getValue(Movies.class));
                 }
 
                 int itemPosition = getLayoutPosition();
 
-                Intent intent = new Intent(mContext, MovieDetailsActivity.class);
+                Intent intent = new Intent(mContext, MoviesDetailsActivity.class);
                 intent.putExtra("position", itemPosition);
-                intent.putExtra("movies", Parcels.wrap(restaurants));
+                intent.putExtra("movies", Parcels.wrap(movies));
 
                 mContext.startActivity(intent);
             }

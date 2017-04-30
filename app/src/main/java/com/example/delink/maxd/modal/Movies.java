@@ -1,6 +1,7 @@
 package com.example.delink.maxd.modal;
 import org.parceler.Parcel;
 
+
 @Parcel
 public class Movies {
     private String title;
@@ -11,6 +12,7 @@ public class Movies {
     private String poster_path;
     private String backdrop_path;
     private double popularity;
+//    String genres;
 
     public Movies() {}
 
@@ -25,6 +27,7 @@ public class Movies {
         this.poster_path = poster_path;
         this.backdrop_path = backdrop_path;
         this.popularity = popularity;
+//        this.genres = genres;
 
     }
 
@@ -52,4 +55,7 @@ public class Movies {
     public double getPopularity(){
         return popularity;
     }
+//    public String getGenres(){
+//        return genres;
+//    }
 }

@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Bind(R.id.login_form) View mLoginFormView;
     @Bind(R.id.login_progress) View mProgressView;
     @Bind(R.id.registerAccount) TextView registerButton;
-    @Bind(R.id.email_sign_in_button) Button mEmailSignInButton;
+    @Bind(R.id.email_sign_in_button) TextView mEmailSignInButton;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -219,7 +219,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
 
-//                  this will log out if the authentication is successful
+                    // this will log out if the authentication is successful
+                    showProgress(false);
                     Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                     if (!task.isSuccessful()) {
@@ -228,9 +229,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                 }
             });
-
-//            mAuth = new UserLoginTask(email, password);
-//            mAuth.execute((Void) null);
         }
     }
 

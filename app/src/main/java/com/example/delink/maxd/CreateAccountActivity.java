@@ -32,7 +32,7 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
     @Bind(R.id.email) EditText mEmail;
     @Bind(R.id.password) EditText mPassword;
     @Bind(R.id.password_confirm) EditText mPassword2;
-    @Bind(R.id.email_sign_in_button) Button mSave;
+    @Bind(R.id.email_sign_in_button) TextView mSave;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
@@ -107,9 +107,9 @@ public class CreateAccountActivity extends AppCompatActivity implements View.OnC
         return true;
     }
 
-    public boolean isValidEmail(String email){
+    public boolean isValidEmail(String email) {
         boolean isGoodEmail = (email != null && Patterns.EMAIL_ADDRESS.matcher(email).matches());
-        if (!isGoodEmail){
+        if (!isGoodEmail) {
             mEmail.setError("Please enter a valid email address");
             return false;
         }

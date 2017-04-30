@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.example.delink.maxd.R;
 import com.example.delink.maxd.modal.Movies;
 //import com.example.delink.maxd.ui.MovieDatails;
-import com.example.delink.maxd.ui.MovieDetailsActivity;
+import com.example.delink.maxd.ui.MoviesDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
@@ -87,7 +87,7 @@ public class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.Mo
         @Override
         public void onClick(View v) {
             int itemPosition = getLayoutPosition();
-            Intent intent = new Intent(mContext, MovieDetailsActivity.class);
+            Intent intent = new Intent(mContext, MoviesDetailsActivity.class);
             intent.putExtra("position", itemPosition);
             intent.putExtra("movies", Parcels.wrap(mMovies));
             mContext.startActivity(intent);
