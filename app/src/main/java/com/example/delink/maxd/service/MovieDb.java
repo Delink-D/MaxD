@@ -18,6 +18,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MovieDb {
+    // MOVIES
     // Method to generate a url to get alll the Toprated movies
     public static void findTopRated(Callback callback) {
         OkHttpClient client = new OkHttpClient();

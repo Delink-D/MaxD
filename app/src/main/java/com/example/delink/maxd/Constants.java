@@ -13,8 +13,8 @@ public class Constants {
     public static final String BASE_URL_SEARCH = "https://api.themoviedb.org/3/search/movie"; // url to send request to search movies
 
     // TV-SERIES
-    public static final String BASE_TV_URL_SERIES = "https://api.themoviedb.org/3/tv/top_rated"; // url to send request to get to rated tv series
-    public static final String BASE_TV_URL_POPULAR = "https://api.themoviedb.org/3/tv/popular"; // url to send request to get to popular tv series
+    //public static final String BASE_TV_URL_SERIES = "https://api.themoviedb.org/3/tv/top_rated"; // url to send request to get to rated tv series
+    //public static final String BASE_TV_URL_POPULAR = "https://api.themoviedb.org/3/tv/popular"; // url to send request to get to popular tv series
 
     public static  final String KEY = "api_key";
     public static  final String QUERY = "query";
@@ -22,5 +22,5 @@ public class Constants {
     public static final String FIREBASE_CHILD_FAVOURITE = "favourite";
 
     // string key for user name
-    public static final String PREFERENCES_USER_KEY = "user";
+    //public static final String PREFERENCES_USER_KEY = "user";
 }

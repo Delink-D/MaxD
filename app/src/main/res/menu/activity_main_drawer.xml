@@ -20,50 +20,29 @@
                     android:title="@string/upcoming" />
             </menu>
         </item>
-        <item android:title="@string/tv"
-            android:id="@+id/nav_tv"
-            android:icon="@mipmap/ic_tv_black_24dp">
-            <menu>
-                <item
-                    android:id="@+id/nav_tv_latest"
-                    android:title="@string/latest" />
-                <item
-                    android:id="@+id/nav_tv_toplated"
-                    android:title="@string/top_rated" />
-                <item
-                    android:id="@+id/nav_tv_popular"
-                    android:title="@string/most_popular" />
-                <item
-                    android:id="@+id/nav_tv_upcoming"
-                    android:title="@string/upcoming" />
-            </menu>
-        </item>
         <item android:title="@string/favourite"
             android:id="@+id/nav_fav">
             <menu>
                 <item
                     android:id="@+id/nav_fav_movies"
                     android:title="@string/movies"/>
-                <item
-                    android:id="@+id/nav_fav_tv"
-                    android:title="@string/tv_s"/>
             </menu>
 
         </item>
     </group>
 
-    <item android:title="@string/communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_send"
-                android:title="@string/send" />
-        </menu>
-    </item>
+    <!--<item android:title="@string/communicate">-->
+        <!--<menu>-->
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="@string/share" />-->
+            <!--<item-->
+                <!--android:id="@+id/nav_send"-->
+                <!--android:icon="@drawable/ic_menu_send"-->
+                <!--android:title="@string/send" />-->
+        <!--</menu>-->
+    <!--</item>-->
 
     <item android:title="@string/account">
         <menu>

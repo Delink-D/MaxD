@@ -20,6 +20,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -88,19 +89,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                //display welcome message
-//                FirebaseUser user = firebaseAuth.getCurrentUser();
-//
-//                TextView mDisplayNameTxt = (TextView) findViewById(R.id.displayName);
-//                if (mDisplayName != null){
-//                mDisplayNameTxt.setText("Welcome " + mDisplayName);
-//                }else mDisplayName.setText("Welcome User!");
             }
         };
 
-        // Call the method to populate the movielist
+        // Call the method to populate the latest movies
         getLatest();
-
     }
 
     // Get toprated movies
@@ -353,10 +346,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_fav_movies) {
             Intent intent = new Intent(MainActivity.this, FavouriteMoviesListActivity.class);
             startActivity(intent);
-
-        }else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }else if (id == R.id.nav_logout){
             logout();
